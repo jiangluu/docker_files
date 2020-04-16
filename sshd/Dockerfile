@@ -8,6 +8,7 @@ RUN mkdir /var/run/sshd && apt-get update \
     mtr-tiny \
     net-tools \
     openssh-server \
+    sudo \
     && apt-get autoremove --yes --purge
 
 ADD node-v12.16.2-linux-x64.tar /usr/local/nodejs
@@ -26,6 +27,7 @@ VOLUME /data
 
 EXPOSE 22
 
+RUN chmod 0777 /data
 COPY entry.sh /entry.sh
 
 ENTRYPOINT ["/entry.sh"]
