@@ -8,5 +8,6 @@ echo "add user ${USER2} with passwd  ${PASSWD2}"
 useradd -r -m -p '' -u 1000 --shell /bin/bash  $USER2
 echo "${USER2}:${PASSWD2}" | chpasswd
 echo "${USER2}   ALL=(ALL)       ALL" > /etc/sudoers
+chmod 0777 /data
 
 exec "/usr/sbin/sshd" "-D"
