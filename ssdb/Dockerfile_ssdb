@@ -1,0 +1,21 @@
+FROM ubuntu:18.04
+MAINTAINER wendal "wendal1985@gmail.com"
+
+
+ADD tssdb.tar /jjj
+
+
+RUN apt-get update && \
+  apt-get install -y python2.7 && \
+  apt-get install -y --force-yes git make gcc g++ autoconf && apt-get clean && \
+  cd /jjj/ssdb && make && make install && cp ssdb-server /usr/bin && \
+  make clean  && apt-get remove -y --force-yes git make gcc g++ autoconf && \
+  apt-get autoremove -y && \
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+  cp ssdb.conf /etc
+
+
+ENV TZ Asia/Shanghai
+EXPOSE 2333
+VOLUME /var/ssdb
+ENTRYPOINT /usr/bin/ssdb-server /etc/ssdb.conf
